@@ -3,13 +3,16 @@
 //
 
 #include "FileStreamReader.h"
+#include "HttpStreamReader.h"
 
 int main() {
-    FileStreamReader reader;
-    reader.open("/Users/mac/code/c++/design/test.txt");
+    HttpStreamReader *reader;
+    reader = new HttpStreamReader();
+//    reader->open("/Users/mac/code/c++/design/test.txt");
+    reader->open("https://www.baidu.com");
     while (1) {
         uint8_t buf[1024];
-        int ret = reader.read(buf, 1024);
+        int ret = reader->read(buf, 1024);
         if (ret <= 0) {
             break;
         }
@@ -18,5 +21,5 @@ int main() {
         }
         printf("\n");
     }
-    reader.close();
+    reader->close();
 }

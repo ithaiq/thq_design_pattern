@@ -6,16 +6,17 @@
 #define DESIGN_FILESTREAMREADER_H
 
 #include <iostream>
+#include "StreamReader.h"
 
 using namespace std;
 
-class FileStreamReader {
+class FileStreamReader : public StreamReader {
 public:
-    int open(const string &url);
+    virtual int open(const string &url) override;
 
-    int close();
+    virtual int close() override;
 
-    int read(uint8_t *buf, int wantLen);
+    virtual int read(uint8_t *buf, int wantLen) override;
 
 private:
     FILE *file = nullptr;
