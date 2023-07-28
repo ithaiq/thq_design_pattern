@@ -4,15 +4,18 @@
 
 #include "FileStreamReader.h"
 #include "HttpStreamReader.h"
+#include "DecryptStreamReader.h"
+#include "DecodeStreamReader.h"
 
 int main() {
-    HttpStreamReader *reader;
-    reader = new HttpStreamReader();
+    HttpStreamReader reader;
+    DecryptStreamReader dps(&reader);
+    DecodeStreamReader ds(&dps);
 //    reader->open("/Users/mac/code/c++/design/test.txt");
-    reader->open("https://www.baidu.com");
+    ds.open("https://www.baidu.com");
     while (1) {
         uint8_t buf[1024];
-        int ret = reader->read(buf, 1024);
+        int ret = ds.read(buf, 1024);
         if (ret <= 0) {
             break;
         }
@@ -21,5 +24,5 @@ int main() {
         }
         printf("\n");
     }
-    reader->close();
+    ds.close();
 }
