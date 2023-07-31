@@ -1,4 +1,7 @@
 #include <cstdio>
+#include <vector>
+
+using namespace std;
 
 //
 // Created by Mac on 2023/7/31.
@@ -12,7 +15,7 @@ public:
 class UserWallet {
 public:
     float balance = 0.0;
-    Observer *observer = nullptr;
+    vector<Observer *> observerVec;
 
     void deposit(float p) {
         balance += p;
@@ -20,7 +23,9 @@ public:
 
     void consume(float p) {
         balance -= p;
-        observer->update();
+        for (Observer *observer: observerVec) {
+            observer->update();
+        }
     };
 
     float getBalance() {
@@ -28,7 +33,7 @@ public:
     }
 
     void attachObserver(Observer *_observer) {
-        observer = _observer;
+        observerVec.push_back(_observer);
     }
 };
 
