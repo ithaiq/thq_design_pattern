@@ -7,14 +7,26 @@
 
 using namespace std;
 
+class Color {
+public:
+    virtual void getColor() = 0;
+};
+
 class Shape {
 public:
     virtual void draw() = 0;
+
+    void SetColor(Color *_color) {
+        color = _color;
+    }
+
+    Color *color = nullptr;
 };
 
 class OneShape : public Shape {
 public:
     virtual void draw() override {
+        color->getColor();
         printf("draw one");
     }
 };
@@ -26,10 +38,6 @@ public:
     }
 };
 
-class Color {
-public:
-    virtual void getColor() = 0;
-};
 
 class BlueColor : public Color {
 public:
@@ -44,3 +52,12 @@ public:
         printf("black\n");
     }
 };
+
+int main() {
+    Shape *shape = new OneShape();
+    Color *color = new BlackColor();
+    shape->SetColor(color);
+    shape->draw();
+    delete color;
+    delete shape;
+}
