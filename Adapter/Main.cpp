@@ -19,12 +19,16 @@ public:
     };
 };
 
-class USDAdapter : public Profit, public USDProfit {
+class USDAdapter : public Profit {
+private:
+    USDProfit usdProfit;
 public:
     float getProfit() {
-        float usdProfitNum = getUSDProfit("abc", "123");
+        float usdProfitNum = usdProfit.getUSDProfit("abc", "123");
         return usdProfitNum * 7.0;;
     }
+
+    explicit USDAdapter(const USDProfit &usdProfit) : usdProfit(usdProfit) {}
 };
 
 int main() {
@@ -36,10 +40,10 @@ int main() {
     usdProfitNum = usdProfitNum * 7.0;
     printf("usdProfitNum:%f\n", usdProfitNum);
 
-    USDAdapter usdAdapter;
+    USDAdapter usdAdapter(usdProfit);
     printf("usdProfitNum1:%f\n", usdAdapter.getProfit());
 
-    Profit *usdAdapter2 = new USDAdapter();
+    Profit *usdAdapter2 = new USDAdapter(usdProfit);
     printf("usdProfitNum2:%f\n", usdAdapter2->getProfit());
     delete usdAdapter2;
 }
